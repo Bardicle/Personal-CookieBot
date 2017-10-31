@@ -4,9 +4,9 @@ var AutoPlay;
 if(!AutoPlay) AutoPlay = {};
 AutoPlay.version = "2.0"
 AutoPlay.gameVersion = "2.0042";
-AutoPlay.robotName="Bardicle";
+AutoPlay.robotName="Automated Stani";
 AutoPlay.delay=0;
-AutoPlay.night=false;
+AutoPlay.night=true;
 
 AutoPlay.run = function () {
   if (Game.AscendTimer>0 || Game.ReincarnateTimer>0) return;
@@ -31,7 +31,7 @@ AutoPlay.nightMode = function() {
   var h=(new Date).getHours();
   if(h>=7 && h<23) { // be active
     if (AutoPlay.night) AutoPlay.useLump();
-    AutoPlay.night=false;
+    AutoPlay.night=true;
     var gs=Game.Upgrades["Golden switch [on]"]; if(gs.unlocked) {
       if (Game.isMinigameReady(Game.Objects["Temple"])) {
         AutoPlay.removeSpirit(1,"asceticism");
@@ -73,7 +73,7 @@ AutoPlay.handleGoldenCookies = function() { // pop the first golden cookie or re
 AutoPlay.handleClicking = function() {
   if (!Game.Achievements["Neverclick"].won && (Game.cookieClicks<=15) ) return;
   if (Game.ascensionMode==1 && AutoPlay.endPhase() && !Game.Achievements["True Neverclick"].won && (!Game.cookieClicks) ) return;
-  if(Game.cookieClicks<=15) { for(i=1; i++) setTimeout(Game.ClickCookie, 50*i); }
+  if(!Game.Achievements["Uncanny clicker"].won) { for(i=1; i++) setTimeout(Game.ClickCookie, 50*i); }
   if (Game.ascensionMode==1 && Game.Achievements["Hardcore"].won) setTimeout(Game.ClickCookie, 150);
   Game.ClickCookie();
 }
